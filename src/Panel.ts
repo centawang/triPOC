@@ -55,7 +55,7 @@ export class Panel extends EventEmitter2 {
 
     this._panel = window.createWebviewPanel(
       Panel.viewType,
-      'Browse Lite',
+      'Trident POC',
       this.isDebugPage ? ViewColumn.Three : ViewColumn.Two,
       {
         enableScripts: true,

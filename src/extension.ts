@@ -138,22 +138,4 @@ export function activate(ctx: ExtensionContext) {
     }),
 
   )
-
-  try {
-    // https://code.visualstudio.com/updates/v1_53#_external-uri-opener
-    ctx.subscriptions.push(window.registerExternalUriOpener?.(
-      'trident-poc.opener',
-      {
-        canOpenExternalUri: () => 2,
-        openExternalUri(resolveUri: Uri) {
-          manager.create(resolveUri)
-        },
-      },
-      {
-        schemes: ['http', 'https'],
-        label: 'Open URL using Browse Lite',
-      },
-    ))
-  }
-  catch {}
 }

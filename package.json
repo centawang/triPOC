@@ -66,6 +66,11 @@
         "category": "Trident",
         "command": "trident.home",
         "title": "Trident Home..."
+      },
+      {
+        "category": "Trident",
+        "command": "trident-poc.controls.debug",
+        "title": "Trident Debug..."
       }
     ],
     "configuration": {
@@ -73,7 +78,7 @@
       "type": "object",
       "properties": {
         "trident-poc.startUrl": {
-          "description": "The default start url for new Browse Lite instances",
+          "description": "The default start url for new Trident POC instances",
           "type": "string"
         },
         "trident-poc.chromeExecutable": {
@@ -134,25 +139,25 @@
     "debuggers": [
       {
         "type": "trident-poc",
-        "label": "Browse Lite",
+        "label": "Trident POC",
         "configurationSnippets": [
           {
-            "label": "Browse Lite: Launch",
-            "description": "Launch Browse Lite to localhost",
+            "label": "Trident POC: Launch",
+            "description": "Launch Trident POC to localhost",
             "body": {
               "type": "trident-poc",
               "request": "launch",
-              "name": "Browse Lite: Launch",
+              "name": "Trident POC: Launch",
               "url": "http://localhost:3000"
             }
           },
           {
-            "label": "Browse Lite: Attach",
-            "description": "Attach to open Browse Lite instances",
+            "label": "Trident POC: Attach",
+            "description": "Attach to open Trident POC instances",
             "body": {
               "type": "trident-poc",
               "request": "attach",
-              "name": "Browse Lite: Attach"
+              "name": "Trident POC: Attach"
             }
           }
         ],
