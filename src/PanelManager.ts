@@ -12,6 +12,7 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
   public browser: BrowserClient
   public config: ExtensionConfiguration
   public defaultSiteRoot: string | undefined
+  public defaultSite: string | undefined
   public defaultWorkspace: string | undefined
   public defaultProduct: string | undefined
 
@@ -45,7 +46,7 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
     panel.once('disposed', () => {
       if (this.current === panel) {
         this.current = undefined
-        commands.executeCommand('setContext', 'browse-lite-active', false)
+        commands.executeCommand('setContext', 'trident-poc-active', false)
       }
       this.panels.delete(panel)
       if (this.panels.size === 0) {
@@ -62,13 +63,13 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
 
     panel.on('focus', () => {
       this.current = panel
-      commands.executeCommand('setContext', 'browse-lite-active', true)
+      commands.executeCommand('setContext', 'trident-poc-active', true)
     })
 
     panel.on('blur', () => {
       if (this.current === panel) {
         this.current = undefined
-        commands.executeCommand('setContext', 'browse-lite-active', false)
+        commands.executeCommand('setContext', 'trident-poc-active', false)
       }
     })
 
@@ -89,7 +90,7 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
       return
 
     const panel = await this.create(`file://${filepath}`)
-    if (getConfig('browse-lite.localFileAutoReload')) {
+    if (getConfig('trident-poc.localFileAutoReload')) {
       panel.disposables.push(
         workspace.createFileSystemWatcher(filepath, true, false, false).onDidChange(() => {
         // TODO: check filename

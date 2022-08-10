@@ -37,12 +37,12 @@ export class DebugProvider {
       ): ProviderResult<DebugConfiguration[]> {
         return Promise.resolve([
           {
-            type: 'browse-lite',
+            type: 'trident-poc',
             name: 'Browse Lite: Attach',
             request: 'attach',
           },
           {
-            type: 'browse-lite',
+            type: 'trident-poc',
             request: 'launch',
             name: 'Browse Lite: Launch',
             url: 'http://localhost:3000',
@@ -55,7 +55,7 @@ export class DebugProvider {
         token?: CancellationToken,
         // @ts-ignore
       ): ProviderResult<DebugConfiguration> {
-        if (!config || config.type !== 'browse-lite') {
+        if (!config || config.type !== 'trident-poc') {
           return null
         }
 

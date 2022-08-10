@@ -40,7 +40,7 @@ export class BrowserClient extends EventEmitter {
     if (platform() === 'linux')
       chromeArgs.push('--no-sandbox')
 
-    const extensionSettings = workspace.getConfiguration('browse-lite')
+    const extensionSettings = workspace.getConfiguration('trident-poc')
     const ignoreHTTPSErrors = extensionSettings.get<boolean>('ignoreHttpsErrors')
 
     let userDataDir;

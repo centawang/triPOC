@@ -10,7 +10,7 @@ export function activate(ctx: ExtensionContext) {
   ctx.subscriptions.push(
 
     debug.registerDebugConfigurationProvider(
-      'browse-lite',
+      'trident-poc',
       debugProvider.getProvider(),
     ),
 
@@ -105,10 +105,11 @@ export function activate(ctx: ExtensionContext) {
         const pick = await window.showQuickPick(
           [
             { label: 'DF', description: 'Dogfood', target: 'https://powerbi-df.analysis-df.windows.net' },
-            { label: 'MSIT', description: 'Msit', target: 'https://https://msit.powerbi.com' },
+            { label: 'MSIT', description: 'Msit', target: 'https://msit.powerbi.com' },
           ],
           { placeHolder: 'Select the view to show when opening a window.' })
         manager.defaultSiteRoot = pick?.target
+        manager.defaultSite = pick?.label
         manager.defaultProduct = 'powerbi'
         manager.defaultWorkspace = '08e16a3a-2a88-4c40-946c-d186d4d555ce'
         return await manager.create(`${pick?.target}?trident=1`)
@@ -118,20 +119,20 @@ export function activate(ctx: ExtensionContext) {
       }
     }),
 
-    commands.registerCommand('browse-lite.openActiveFile', () => {
+    commands.registerCommand('trident-poc.openActiveFile', () => {
       const filename = window.activeTextEditor?.document?.fileName
       manager.createFile(filename?.toString())
     }),
 
-    commands.registerCommand('browse-lite.controls.refresh', () => {
+    commands.registerCommand('trident-poc.controls.refresh', () => {
       manager.current?.reload()
     }),
 
-    commands.registerCommand('browse-lite.controls.external', () => {
+    commands.registerCommand('trident-poc.controls.external', () => {
       manager.current?.openExternal(true)
     }),
 
-    commands.registerCommand('browse-lite.controls.debug', async() => {
+    commands.registerCommand('trident-poc.controls.debug', async() => {
       const panel = await manager.current?.createDebugPanel()
       panel?.show()
     }),
@@ -141,7 +142,7 @@ export function activate(ctx: ExtensionContext) {
   try {
     // https://code.visualstudio.com/updates/v1_53#_external-uri-opener
     ctx.subscriptions.push(window.registerExternalUriOpener?.(
-      'browse-lite.opener',
+      'trident-poc.opener',
       {
         canOpenExternalUri: () => 2,
         openExternalUri(resolveUri: Uri) {
