@@ -38,27 +38,34 @@
         "title": "Product Switch ..."
       },
       {
-        "category": "Browse Lite",
-        "command": "browse-lite.openActiveFile",
-        "title": "Open Active File in Preview"
+        "category": "Trident",
+        "command": "trident.workspace",
+        "title": "Trident Workspace ..."
       },
       {
-        "category": "Browse Lite",
-        "command": "browse-lite.controls.refresh",
-        "title": "Refresh Page",
-        "icon": "$(refresh)"
+        "category": "Trident",
+        "command": "trident.browse",
+        "title": "Browse..."
       },
       {
-        "category": "Browse Lite",
-        "command": "browse-lite.controls.external",
-        "title": "Open page with system browser",
-        "icon": "$(link-external)"
+        "category": "Trident",
+        "command": "trident.search",
+        "title": "Search..."
       },
       {
-        "category": "Browse Lite",
-        "command": "browse-lite.controls.debug",
-        "title": "Open debug page",
-        "icon": "$(bug)"
+        "category": "Trident",
+        "command": "trident.datahub",
+        "title": "DataHub..."
+      },
+      {
+        "category": "Trident",
+        "command": "trident.createhub",
+        "title": "Create Artifact..."
+      },
+      {
+        "category": "Trident",
+        "command": "trident.home",
+        "title": "Trident Home..."
       }
     ],
     "configuration": {
@@ -273,8 +280,11 @@
   "activationEvents": [
     "onCommand:trident.open",
     "onCommand:trident.switch",
-    "onCommand:browse-lite.open",
-    "onCommand:browse-lite.openActiveFile",
+    "onCommand:trident.workspace",
+    "onCommand:trident.home",
+    "onCommand:trident.datahub",
+    "onCommand:trident.createhub",
+    "onCommand:trident.search",
     "onOpenExternalUri:http",
     "onOpenExternalUri:https",
     "onDebugInitialConfigurations",

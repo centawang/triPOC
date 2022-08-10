@@ -11,7 +11,9 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
   public current: Panel | undefined
   public browser: BrowserClient
   public config: ExtensionConfiguration
-  public currentUrl: string | undefined
+  public defaultSiteRoot: string | undefined
+  public defaultWorkspace: string | undefined
+  public defaultProduct: string | undefined
 
   constructor(public readonly ctx: ExtensionContext) {
     super()
@@ -71,7 +73,6 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
     })
 
     this.panels.add(panel)
-
     await panel.launch(startUrl.toString())
 
     this.emit('windowCreated', panel)
