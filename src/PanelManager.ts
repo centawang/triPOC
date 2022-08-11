@@ -35,6 +35,13 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
     }
   }
 
+  public async goto(url: string) {
+    if (this.current === undefined)
+      this.create(url)
+    else
+      this.current.navigateTo(url)
+  }
+
   public async create(startUrl: string | Uri = this.config.startUrl) {
     this.refreshSettings()
 
