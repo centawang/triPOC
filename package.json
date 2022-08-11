@@ -26,6 +26,12 @@
     "release": "npx bumpp --commit --tag --push"
   },
   "contributes": {
+    "views": {
+            "explorer": [{
+                "id": "tridentTree",
+                "name": "Trident"
+            }]
+        },
     "commands": [
       {
         "category": "Trident",
@@ -261,9 +267,11 @@
     }
   },
   "activationEvents": [
+    "onView:tridentTree",
     "onCommand:trident.open",
     "onCommand:trident.switch",
     "onCommand:trident.workspace",
+    "onCommand:trident.openWorkspace",
     "onCommand:trident.home",
     "onCommand:trident.datahub",
     "onCommand:trident.createhub",

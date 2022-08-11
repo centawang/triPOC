@@ -3,6 +3,7 @@ import { ContentProvider } from './ContentProvider'
 
 import { DebugProvider } from './DebugProvider'
 import { PanelManager } from './PanelManager'
+import { TridentProvider } from './TridentProvider'
 
 export function activate(ctx: ExtensionContext) {
   const manager = new PanelManager(ctx)
@@ -61,9 +62,20 @@ export function activate(ctx: ExtensionContext) {
       }
     }),
 
+    commands.registerCommand('trident.openWorkspace', async(id: string) => {
+      try {
+        console.log(`open workspace${id}`)
+        manager.defaultWorkspace = id
+        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/groups/${id}/list?trident=1&inVSCode=1&product=${manager.defaultProduct}`)
+      }
+      catch (e) {
+        console.error(e)
+      }
+    }),
+
     commands.registerCommand('trident.workspace', async() => {
       try {
-        const workspaces = await ContentProvider.getWorkspace()
+        const workspaces = await ContentProvider.getWorkspaceAsPickup()
         const pick = await window.showQuickPick(
           workspaces,
           { placeHolder: 'Select a workspace' })
@@ -131,4 +143,6 @@ export function activate(ctx: ExtensionContext) {
     }),
 
   )
+  const tridentProvider = new TridentProvider()
+  window.registerTreeDataProvider('tridentTree', tridentProvider)
 }

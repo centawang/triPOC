@@ -11,10 +11,10 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
   public current: Panel | undefined
   public browser: BrowserClient
   public config: ExtensionConfiguration
-  public defaultSiteRoot: string | undefined
-  public defaultSite: string | undefined
+  public defaultSiteRoot: string | undefined = 'vscode.TreeItemCollapsibleState.Collapsed'
+  public defaultSite: string | undefined = 'DF'
   public defaultWorkspace: string | undefined
-  public defaultProduct: string | undefined
+  public defaultProduct: string | undefined = 'powerbi'
 
   constructor(public readonly ctx: ExtensionContext) {
     super()
