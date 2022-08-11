@@ -1,4 +1,5 @@
-import { commands, debug, ExtensionContext, Uri, window } from 'vscode'
+import { commands, debug, ExtensionContext, window } from 'vscode'
+import { ContentProvider } from './ContentProvider'
 
 import { DebugProvider } from './DebugProvider'
 import { PanelManager } from './PanelManager'
@@ -62,20 +63,12 @@ export function activate(ctx: ExtensionContext) {
 
     commands.registerCommand('trident.workspace', async() => {
       try {
+        const workspaces = await ContentProvider.getWorkspace()
         const pick = await window.showQuickPick(
-          [
-            { label: 'Data Cloud UX Beijing PPE', description: '', target: '08e16a3a-2a88-4c40-946c-d186d4d555ce' },
-            { label: 'mandyTest', description: '', target: '30ff1c5c-1161-4d6e-a4a3-a946b88b7c81' },
-            { label: 'test0512', description: '', target: '87b98ea1-8f8b-4416-bdf4-2ce1490ad19e' },
-            { label: 'shengchen-test', description: '', target: '801f77ee-83e2-4d20-ada3-276e56e58288' },
-            { label: 'testOne0526', description: '', target: '744645a8-045e-4fee-a1f3-59e755acb691' },
-            { label: 'testOnexx', description: '', target: '5a8216be-c796-4715-8be6-4ff4b525994f' },
-            { label: 'testx', description: '', target: '1040d217-3ba9-4e5a-a961-16d190b57191' },
-            { label: 'yaduTest11', description: '', target: 'f41d320d-a02c-4620-8a12-2bdb298c27be' },
-          ],
+          workspaces,
           { placeHolder: 'Select a workspace' })
         manager.defaultWorkspace = pick?.target
-        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/groups/${pick?.target}/list?trident=1&inVSCode=1&product=${pick?.target}`)
+        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/groups/${pick?.target}/list?trident=1&inVSCode=1&product=${manager.defaultProduct}`)
       }
       catch (e) {
         console.error(e)
@@ -105,7 +98,7 @@ export function activate(ctx: ExtensionContext) {
         const pick = await window.showQuickPick(
           [
             { label: 'DF', description: 'Dogfood', target: 'https://powerbi-df.analysis-df.windows.net' },
-            { label: 'MSIT', description: 'Msit', target: 'https://msit.powerbi.com' },
+            { label: 'dxt', description: 'dxt', target: 'https://daily.powerbi.com' },
           ],
           { placeHolder: 'Select the view to show when opening a window.' })
         manager.defaultSiteRoot = pick?.target
