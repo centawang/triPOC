@@ -29,13 +29,16 @@ export class ContentProvider {
 
   public static async listArtifact(type: string, workspace: TridentNode): Promise<TridentNode[]> {
     const items: TridentNode [] = []
-    const artifacts = JSON.parse(await this.execShell(`pbicli ${type} list -w ${workspace.label}`))
-    artifacts.forEach((element) => {
-      const item = new TridentNode(element.name, element.id, type, element.toString(), TreeItemCollapsibleState.Collapsed)
-      console.log(`add artifact ${workspace.id},${type},${element.id}`)
-      item.command = { command: 'trident.openArtifact', title: 'Open Artifact', arguments: [workspace.id, type, element.id] }
-      items.push(item)
-    })
+    const result = await this.execShell(`pbicli ${type} list -w "${workspace.label}"`)
+    if (result) {
+      const artifacts = JSON.parse(result)
+      artifacts.forEach((element) => {
+        const item = new TridentNode(element.name ? element.name : element.displayName, element.id, type, element.toString(), TreeItemCollapsibleState.Collapsed)
+        console.log(`add artifact ${workspace.id},${type},${element.id}`)
+        item.command = { command: 'trident.openArtifact', title: 'Open Artifact', arguments: [workspace.id, type, element.id] }
+        items.push(item)
+      })
+    }
     return items
   }
 

@@ -24,13 +24,8 @@ export class TridentProvider implements vscode.TreeDataProvider<TridentNode> {
       )
     }
     else if (element) {
-      if (element?.parent?.id) {
-        console.log(`list artifact in ${element?.id}, ${element?.parent}`)
-        return Promise.resolve(ContentProvider.listArtifact(element?.type, element?.parent))
-      }
-      else {
-        return Promise.resolve([])
-      }
+      console.log(`list artifact in ${element?.id}, ${element?.parent}`)
+      return Promise.resolve(ContentProvider.listArtifact(element?.type, element?.parent))
     }
     else {
       return Promise.resolve(ContentProvider.listWorkspace())
