@@ -272,6 +272,7 @@
     "onCommand:trident.switch",
     "onCommand:trident.workspace",
     "onCommand:trident.openWorkspace",
+    "onCommand:trident.openArtifact",
     "onCommand:trident.home",
     "onCommand:trident.datahub",
     "onCommand:trident.createhub",

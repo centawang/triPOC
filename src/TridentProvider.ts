@@ -3,6 +3,7 @@ import * as vscode from 'vscode'
 import { ContentProvider } from './ContentProvider'
 
 export class TridentProvider implements vscode.TreeDataProvider<TridentNode> {
+  public pbiArtifactTypes: string[] = ['report', 'dashboard', 'dataflow', 'dataset']
   constructor() { }
 
   getTreeItem(element: TridentNode): vscode.TreeItem {
@@ -10,13 +11,29 @@ export class TridentProvider implements vscode.TreeDataProvider<TridentNode> {
   }
 
   getChildren(element?: TridentNode): Thenable<TridentNode[]> {
-    if (element) {
+    if (element?.type === 'workspace') {
+      const types: TridentNode[] = []
+      console.log(`${element.id}`)
+      this.pbiArtifactTypes.forEach((type): void => {
+        const node = new TridentNode(type, '', type, element, vscode.TreeItemCollapsibleState.Collapsed)
+        console.log(`push ${type} into parent ${node.parent.id}`)
+        types.push(node)
+      })
       return Promise.resolve(
-        [],
+        types,
       )
     }
+    else if (element) {
+      if (element?.parent?.id) {
+        console.log(`list artifact in ${element?.id}, ${element?.parent}`)
+        return Promise.resolve(ContentProvider.listArtifact(element?.type, element?.parent))
+      }
+      else {
+        return Promise.resolve([])
+      }
+    }
     else {
-      return Promise.resolve(ContentProvider.getWorkspaceAsTridentNode())
+      return Promise.resolve(ContentProvider.listWorkspace())
     }
   }
 }
@@ -26,7 +43,7 @@ export class TridentNode extends vscode.TreeItem {
     public readonly label: string,
     public readonly id: string,
     public readonly type: string,
-    private objStr: string,
+    public readonly parent: TridentNode,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
   ) {
     super(label, collapsibleState)

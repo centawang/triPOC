@@ -73,6 +73,18 @@ export function activate(ctx: ExtensionContext) {
       }
     }),
 
+    commands.registerCommand('trident.openArtifact', async(workspaceId: string, type: string, id: string) => {
+      try {
+        const url = `${manager.defaultSiteRoot}/groups/${workspaceId}/${type}s/${id}?trident=1&inVSCode=1&product=${manager.defaultProduct}`
+        console.log(`open artifact ${url}`)
+        manager.defaultWorkspace = workspaceId
+        return await manager.current?.navigateTo(url)
+      }
+      catch (e) {
+        console.error(e)
+      }
+    }),
+
     commands.registerCommand('trident.workspace', async() => {
       try {
         const workspaces = await ContentProvider.getWorkspaceAsPickup()
