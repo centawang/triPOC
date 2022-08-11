@@ -17,7 +17,7 @@ export function activate(ctx: ExtensionContext) {
     commands.registerCommand('trident.search', async() => {
       try {
         const inputStr = await window.showInputBox()
-        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/search?trident=1&product=${manager.defaultProduct}&searchQuery=${inputStr}`)
+        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/search?trident=1&inVSCode=1&product=${manager.defaultProduct}&searchQuery=${inputStr}`)
       }
       catch (e) {
         console.error(e)
@@ -26,7 +26,7 @@ export function activate(ctx: ExtensionContext) {
 
     commands.registerCommand('trident.home', async() => {
       try {
-        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/home?trident=1&product=${manager.defaultProduct}`)
+        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/home?trident=1&inVSCode=1&product=${manager.defaultProduct}`)
       }
       catch (e) {
         console.error(e)
@@ -35,7 +35,7 @@ export function activate(ctx: ExtensionContext) {
 
     commands.registerCommand('trident.datahub', async() => {
       try {
-        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/datahub?trident=1&product=${manager.defaultProduct}`)
+        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/datahub?trident=1&inVSCode=1&product=${manager.defaultProduct}`)
       }
       catch (e) {
         console.error(e)
@@ -44,7 +44,7 @@ export function activate(ctx: ExtensionContext) {
 
     commands.registerCommand('trident.createhub', async() => {
       try {
-        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/groups/${manager.defaultWorkspace}/create?trident=1&product=${manager.defaultProduct}`)
+        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/groups/${manager.defaultWorkspace}/create?trident=1&inVSCode=1&product=${manager.defaultProduct}`)
       }
       catch (e) {
         console.error(e)
@@ -53,7 +53,7 @@ export function activate(ctx: ExtensionContext) {
 
     commands.registerCommand('trident.browse', async() => {
       try {
-        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/browse/recent/?trident=1&product=${manager.defaultProduct}`)
+        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/browse/recent/?trident=1&inVSCode=1&product=${manager.defaultProduct}`)
       }
       catch (e) {
         console.error(e)
@@ -75,7 +75,7 @@ export function activate(ctx: ExtensionContext) {
           ],
           { placeHolder: 'Select a workspace' })
         manager.defaultWorkspace = pick?.target
-        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/groups/${pick?.target}/list?trident=1&product=${pick?.target}`)
+        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}/groups/${pick?.target}/list?trident=1&inVSCode=1&product=${pick?.target}`)
       }
       catch (e) {
         console.error(e)
@@ -93,7 +93,7 @@ export function activate(ctx: ExtensionContext) {
           ],
           { placeHolder: 'Select a product' })
         manager.defaultProduct = pick?.target
-        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}?trident=1&product=${pick?.target}`)
+        return await manager.current?.navigateTo(`${manager.defaultSiteRoot}?trident=1&inVSCode=1&product=${pick?.target}`)
       }
       catch (e) {
         console.error(e)
@@ -112,7 +112,7 @@ export function activate(ctx: ExtensionContext) {
         manager.defaultSite = pick?.label
         manager.defaultProduct = 'powerbi'
         manager.defaultWorkspace = '08e16a3a-2a88-4c40-946c-d186d4d555ce'
-        return await manager.create(`${pick?.target}?trident=1`)
+        return await manager.create(`${pick?.target}?trident=1&inVSCode=1`)
       }
       catch (e) {
         console.error(e)
