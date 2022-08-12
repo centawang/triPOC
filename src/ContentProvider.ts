@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { join } from 'path'
 import fs from 'fs'
 import * as cp from 'child_process'

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { commands, debug, ExtensionContext, window } from 'vscode'
 import { ContentProvider } from './ContentProvider'
 
@@ -78,7 +79,7 @@ export function activate(ctx: ExtensionContext) {
         const url = `${manager.defaultSiteRoot}/groups/${workspaceId}/${type}s/${id}?trident=1&inVSCode=1&clientSideAuth=1&product=${manager.defaultProduct}`
         console.log(`open artifact ${url}`)
         manager.defaultWorkspace = workspaceId
-        return await manager.goto(url)
+        return await manager.create(url)
       }
       catch (e) {
         console.error(e)
@@ -119,17 +120,9 @@ export function activate(ctx: ExtensionContext) {
 
     commands.registerCommand('trident.open', async() => {
       try {
-        const pick = await window.showQuickPick(
-          [
-            { label: 'DF', description: 'Dogfood', target: 'https://powerbi-df.analysis-df.windows.net' },
-            { label: 'dxt', description: 'dxt', target: 'https://daily.powerbi.com' },
-          ],
-          { placeHolder: 'Select the view to show when opening a window.' })
-        manager.defaultSiteRoot = pick?.target
-        manager.defaultSite = pick?.label
         manager.defaultProduct = 'powerbi'
         manager.defaultWorkspace = '08e16a3a-2a88-4c40-946c-d186d4d555ce'
-        return await manager.goto(`${pick?.target}?trident=1&inVSCode=1`)
+        return await manager.goto(`${manager.defaultSiteRoot}?trident=1&inVSCode=1`)
       }
       catch (e) {
         console.error(e)

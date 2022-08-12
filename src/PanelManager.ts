@@ -11,7 +11,7 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
   public current: Panel | undefined
   public browser: BrowserClient
   public config: ExtensionConfiguration
-  public defaultSiteRoot: string | undefined = 'vscode.TreeItemCollapsibleState.Collapsed'
+  public defaultSiteRoot: string | undefined = 'https://powerbi-df.analysis-df.windows.net'
   public defaultSite: string | undefined = 'DF'
   public defaultWorkspace: string | undefined
   public defaultProduct: string | undefined = 'powerbi'
