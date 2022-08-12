@@ -87,7 +87,7 @@ export function activate(ctx: ExtensionContext) {
 
     commands.registerCommand('trident.workspace', async() => {
       try {
-        const workspaces = await ContentProvider.getWorkspaceAsPickup()
+        const workspaces = await ContentProvider.listWorkspaceAsPickup()
         const pick = await window.showQuickPick(
           workspaces,
           { placeHolder: 'Select a workspace' })

@@ -33,7 +33,7 @@ export class ContentProvider {
     if (result) {
       const artifacts = JSON.parse(result)
       artifacts.forEach((element) => {
-        const item = new TridentNode(element.name ? element.name : element.displayName, element.id, type, element.toString(), TreeItemCollapsibleState.Collapsed)
+        const item = new TridentNode(element.name ? element.name : element.displayName, element.id, type, element.toString(), TreeItemCollapsibleState.None)
         console.log(`add artifact ${workspace.id},${type},${element.id}`)
         item.command = { command: 'trident.openArtifact', title: 'Open Artifact', arguments: [workspace.id, type, element.id] }
         items.push(item)
@@ -42,7 +42,7 @@ export class ContentProvider {
     return items
   }
 
-  public static async getWorkspaceAsPickup(): Promise<{label: string; description: string; target: string} []> {
+  public static async listWorkspaceAsPickup(): Promise<{label: string; description: string; target: string} []> {
     const workspaceItems: {label: string; description: string; target: string} [] = []
     const workspaces = JSON.parse(await this.execShell('pbicli workspace list'))
     workspaces.forEach((element) => {
