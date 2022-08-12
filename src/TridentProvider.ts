@@ -3,7 +3,7 @@ import * as vscode from 'vscode'
 import { ContentProvider } from './ContentProvider'
 
 export class TridentProvider implements vscode.TreeDataProvider<TridentNode> {
-  public pbiArtifactTypes: string[] = ['report', 'dashboard', 'dataflow', 'dataset', 'pipeline', 'scorecard']
+  public pbiArtifactTypes: string[] = ['report', 'dashboard', 'dataflow', 'dataset', 'scorecard']
   constructor() { }
 
   getTreeItem(element: TridentNode): vscode.TreeItem {
@@ -13,10 +13,8 @@ export class TridentProvider implements vscode.TreeDataProvider<TridentNode> {
   getChildren(element?: TridentNode): Thenable<TridentNode[]> {
     if (element?.type === 'workspace') {
       const types: TridentNode[] = []
-      console.log(`${element.id}`)
       this.pbiArtifactTypes.forEach((type): void => {
         const node = new TridentNode(type, '', type, element, vscode.TreeItemCollapsibleState.Collapsed)
-        console.log(`push ${type} into parent ${node.parent.id}`)
         types.push(node)
       })
       return Promise.resolve(
@@ -24,7 +22,6 @@ export class TridentProvider implements vscode.TreeDataProvider<TridentNode> {
       )
     }
     else if (element) {
-      console.log(`list artifact in ${element?.id}, ${element?.parent}`)
       return Promise.resolve(ContentProvider.listArtifact(element?.type, element?.parent))
     }
     else {

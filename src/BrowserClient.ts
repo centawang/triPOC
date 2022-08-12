@@ -24,9 +24,9 @@ export class BrowserClient extends EventEmitter {
 
     chromeArgs.push(`--remote-debugging-port=${this.config.debugPort}`)
 
-    chromeArgs.push(`--allow-file-access-from-files`)
+    chromeArgs.push('--allow-file-access-from-files')
 
-    chromeArgs.push(`--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36`)
+    chromeArgs.push('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36')
 
     const chromePath = this.config.chromeExecutable || this.getChromiumPath()
 
@@ -43,10 +43,9 @@ export class BrowserClient extends EventEmitter {
     const extensionSettings = workspace.getConfiguration('trident-poc')
     const ignoreHTTPSErrors = extensionSettings.get<boolean>('ignoreHttpsErrors')
 
-    let userDataDir;
-    if (this.config.storeUserData) {
-      userDataDir = join(this.ctx.globalStorageUri.fsPath, 'UserData');
-    }
+    let userDataDir
+    if (this.config.storeUserData)
+      userDataDir = join(this.ctx.globalStorageUri.fsPath, 'UserData')
 
     this.browser = await puppeteer.launch({
       executablePath: chromePath,
@@ -64,7 +63,7 @@ export class BrowserClient extends EventEmitter {
     if (!this.browser)
       await this.launchBrowser()
 
-    const page = new BrowserPage(this.browser, await this.browser.newPage())
+    const page = new BrowserPage(this.browser, await this.browser?.newPage())
     await page.launch()
     return page
   }
@@ -73,7 +72,7 @@ export class BrowserClient extends EventEmitter {
     return new Promise((resolve) => {
       if (this.browser) {
         this.browser.close()
-        this.browser = null
+        this.browser = undefined
       }
       resolve()
     })
