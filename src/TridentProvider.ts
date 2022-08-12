@@ -3,7 +3,7 @@ import * as vscode from 'vscode'
 import { ContentProvider } from './ContentProvider'
 
 export class TridentProvider implements vscode.TreeDataProvider<TridentNode> {
-  public pbiArtifactTypes: string[] = ['report', 'dashboard', 'dataflow', 'dataset', 'scorecard']
+  public pbiArtifactTypes: string[] = ['trident', 'report', 'dashboard', 'dataflow', 'dataset', 'scorecard']
   constructor() { }
 
   getTreeItem(element: TridentNode): vscode.TreeItem {

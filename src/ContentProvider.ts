@@ -30,11 +30,33 @@ export class ContentProvider {
   public static async listArtifact(type: string, workspace: TridentNode): Promise<TridentNode[]> {
     const items: TridentNode [] = []
     const result = await this.execShell(`pbicli ${type} list -w "${workspace.label}"`)
-    if (result) {
+    if (type === 'trident') {
+      const all = JSON.parse(result)
+      const artifacts = all.artifacts['a:ArtifactMetadata']
+      const element = artifacts
+      console.log(`add artifact ${artifacts}`)
+      if (artifacts === undefined)
+        return items
+      if (element['a:artifactType']) {
+        const item = new TridentNode(element['a:displayName'], element['a:objectId'], element['a:artifactType'], element, TreeItemCollapsibleState.None)
+        console.log(`add artifact ${workspace.id},${item.type},${item.label},${item.id}`)
+        item.command = { command: 'trident.openArtifact', title: 'Open Artifact', arguments: [workspace.id, item.type.toLocaleLowerCase(), item.id] }
+        items.push(item)
+      }
+      else {
+        artifacts.forEach((element) => {
+          const item = new TridentNode(element['a:displayName'], element['a:objectId'], element['a:artifactType'], element, TreeItemCollapsibleState.None)
+          console.log(`add artifact ${workspace.id},${item.type},${item.label},${item.id}`)
+          item.command = { command: 'trident.openArtifact', title: 'Open Artifact', arguments: [workspace.id, item.type.toLocaleLowerCase(), item.id] }
+          items.push(item)
+        })
+      }
+    }
+    else {
       const artifacts = JSON.parse(result)
       artifacts.forEach((element) => {
-        const item = new TridentNode(element.name ? element.name : element.displayName, element.id, type, element.toString(), TreeItemCollapsibleState.None)
-        console.log(`add artifact ${workspace.id},${type},${element.id}`)
+        const item = new TridentNode(element.name ? element.name : element.displayName, element.id, type, element, TreeItemCollapsibleState.None)
+        console.log(`add artifact ${workspace.id},${type},${item.id}`)
         item.command = { command: 'trident.openArtifact', title: 'Open Artifact', arguments: [workspace.id, type, element.id] }
         items.push(item)
       })
