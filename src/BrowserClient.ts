@@ -51,7 +51,7 @@ export class BrowserClient extends EventEmitter {
       executablePath: chromePath,
       args: chromeArgs,
       ignoreHTTPSErrors,
-      ignoreDefaultArgs: ['--mute-audio'],
+      ignoreDefaultArgs: ['--mute-audio', '--disable-extensions'],
       userDataDir,
     })
 
