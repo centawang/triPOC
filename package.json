@@ -26,10 +26,21 @@
     "release": "npx bumpp --commit --tag --push"
   },
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "trident-explorer",
+          "title": "Trident Explorer",
+          "icon": "resources/trident.png"
+        }
+      ]
+    },
     "views": {
-            "explorer": [{
+            "trident-explorer": [{
                 "id": "tridentTree",
-                "name": "Trident"
+                "name": "Trident",
+                "icon": "resources/trident.png",
+                "contextualTitle": "Trident Explorer"
             }]
         },
     "commands": [
