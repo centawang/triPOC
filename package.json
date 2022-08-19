@@ -1,21 +1,21 @@
 {
-  "name": "browse-lite",
-  "displayName": "Browse Lite",
-  "version": "0.3.0",
-  "description": "Embedded browser in VS Code.",
+  "name": "trident-poc",
+  "displayName": "trident poc Lite",
+  "version": "0.1.0",
+  "description": "Trident poc Lite in VS Code.",
   "categories": [
     "Other"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/antfu/vscode-browse-lite.git"
+    "url": "https://github.com/centawang/triPOC.git"
   },
   "license": "MIT",
   "author": {
-    "name": "Anthony Fu",
-    "email": "hi@antfu.me"
+    "name": "Mandy",
+    "email": "manydw@microsoft.com"
   },
-  "publisher": "antfu",
+  "publisher": "mandyw",
   "main": "./dist/extension.js",
   "scripts": {
     "build:dev": "vite build && npm run build:ts",
@@ -26,6 +26,23 @@
     "release": "npx bumpp --commit --tag --push"
   },
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "trident-explorer",
+          "title": "Trident Explorer",
+          "icon": "resources/trident.png"
+        }
+      ]
+    },
+    "views": {
+            "trident-explorer": [{
+                "id": "tridentTree",
+                "name": "Trident",
+                "icon": "resources/trident.png",
+                "contextualTitle": "Trident Explorer"
+            }]
+        },
     "commands": [
       {
         "category": "Trident",
@@ -38,57 +55,69 @@
         "title": "Product Switch ..."
       },
       {
-        "category": "Browse Lite",
-        "command": "browse-lite.openActiveFile",
-        "title": "Open Active File in Preview"
+        "category": "Trident",
+        "command": "trident.workspace",
+        "title": "Trident Workspace ..."
       },
       {
-        "category": "Browse Lite",
-        "command": "browse-lite.controls.refresh",
-        "title": "Refresh Page",
-        "icon": "$(refresh)"
+        "category": "Trident",
+        "command": "trident.browse",
+        "title": "Browse..."
       },
       {
-        "category": "Browse Lite",
-        "command": "browse-lite.controls.external",
-        "title": "Open page with system browser",
-        "icon": "$(link-external)"
+        "category": "Trident",
+        "command": "trident.search",
+        "title": "Search..."
       },
       {
-        "category": "Browse Lite",
-        "command": "browse-lite.controls.debug",
-        "title": "Open debug page",
-        "icon": "$(bug)"
+        "category": "Trident",
+        "command": "trident.datahub",
+        "title": "DataHub..."
+      },
+      {
+        "category": "Trident",
+        "command": "trident.createhub",
+        "title": "Create Artifact..."
+      },
+      {
+        "category": "Trident",
+        "command": "trident.home",
+        "title": "Trident Home..."
+      },
+      {
+        "category": "Trident",
+        "command": "trident-poc.controls.debug",
+        "title": "Trident Debug..."
       }
     ],
     "configuration": {
-      "title": "Browse Lite",
+      "title": "trident-poc",
       "type": "object",
       "properties": {
-        "browse-lite.startUrl": {
-          "description": "The default start url for new Browse Lite instances",
+        "trident-poc.startUrl": {
+          "description": "The default start url for new Trident POC instances",
           "type": "string"
         },
-        "browse-lite.chromeExecutable": {
+        "trident-poc.chromeExecutable": {
           "description": "The full path to the executable, including the complete filename of the executable",
           "type": "string"
         },
-        "browse-lite.verbose": {
+        "trident-poc.verbose": {
           "default": false,
           "description": "Toggles verbose logging",
           "type": "boolean"
         },
-        "browse-lite.debugHost": {
+        "trident-poc.debugHost": {
           "default": "localhost",
           "description": "Host name for debug",
           "type": "string"
         },
-        "browse-lite.debugPort": {
+        "trident-poc.debugPort": {
           "default": 9222,
           "description": "Port number for debug, when occupied, it will try to find another one by self bumpping.",
           "type": "number"
         },
-        "browse-lite.format": {
+        "trident-poc.format": {
           "default": "png",
           "enum": [
             "png",
@@ -97,27 +126,27 @@
           "description": "The type of image used in rendering preview.",
           "type": "string"
         },
-        "browse-lite.ignoreHttpsErrors": {
+        "trident-poc.ignoreHttpsErrors": {
           "default": true,
           "description": "Ignore HTTPS errors if you are using self-signed SSL certificates",
           "type": "boolean"
         },
-        "browse-lite.quality": {
+        "trident-poc.quality": {
           "default": 100,
           "description": "Image quality of screencasting",
           "type": "number"
         },
-        "browse-lite.everyNthFrame": {
+        "trident-poc.everyNthFrame": {
           "default": 1,
           "description": "Skip for frames of screencasting",
           "type": "number"
         },
-        "browse-lite.localFileAutoReload": {
+        "trident-poc.localFileAutoReload": {
           "default": true,
           "description": "Automatically reload page on local file changes",
           "type": "boolean"
         },
-        "browse-lite.storeUserData": {
+        "trident-poc.storeUserData": {
           "default": true,
           "description": "Store cookies, localStorage, etc. on disk, so that you don't lose them when you close session. This will help you not get logged out.",
           "type": "boolean"
@@ -126,26 +155,26 @@
     },
     "debuggers": [
       {
-        "type": "browse-lite",
-        "label": "Browse Lite",
+        "type": "trident-poc",
+        "label": "Trident POC",
         "configurationSnippets": [
           {
-            "label": "Browse Lite: Launch",
-            "description": "Launch Browse Lite to localhost",
+            "label": "Trident POC: Launch",
+            "description": "Launch Trident POC to localhost",
             "body": {
-              "type": "browse-lite",
+              "type": "trident-poc",
               "request": "launch",
-              "name": "Browse Lite: Launch",
+              "name": "Trident POC: Launch",
               "url": "http://localhost:3000"
             }
           },
           {
-            "label": "Browse Lite: Attach",
-            "description": "Attach to open Browse Lite instances",
+            "label": "Trident POC: Attach",
+            "description": "Attach to open Trident POC instances",
             "body": {
-              "type": "browse-lite",
+              "type": "trident-poc",
               "request": "attach",
-              "name": "Browse Lite: Attach"
+              "name": "Trident POC: Attach"
             }
           }
         ],
@@ -243,38 +272,22 @@
     ],
     "menus": {
       "editor/title": [
-        {
-          "when": "resourceScheme == webview-panel && browse-lite-active",
-          "command": "browse-lite.controls.external",
-          "group": "navigation"
-        },
-        {
-          "when": "resourceScheme == webview-panel && browse-lite-active && !browse-lite-debug-active",
-          "command": "browse-lite.controls.debug",
-          "group": "navigation"
-        }
       ],
       "commandPalette": [
-        {
-          "command": "browse-lite.controls.refresh",
-          "when": "false"
-        },
-        {
-          "command": "browse-lite.controls.external",
-          "when": "false"
-        },
-        {
-          "command": "browse-lite.controls.debug",
-          "when": "false"
-        }
       ]
     }
   },
   "activationEvents": [
+    "onView:tridentTree",
     "onCommand:trident.open",
     "onCommand:trident.switch",
-    "onCommand:browse-lite.open",
-    "onCommand:browse-lite.openActiveFile",
+    "onCommand:trident.workspace",
+    "onCommand:trident.openWorkspace",
+    "onCommand:trident.openArtifact",
+    "onCommand:trident.home",
+    "onCommand:trident.datahub",
+    "onCommand:trident.createhub",
+    "onCommand:trident.search",
     "onOpenExternalUri:http",
     "onOpenExternalUri:https",
     "onDebugInitialConfigurations",

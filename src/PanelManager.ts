@@ -11,7 +11,10 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
   public current: Panel | undefined
   public browser: BrowserClient
   public config: ExtensionConfiguration
-  public currentUrl: string | undefined
+  public defaultSiteRoot: string | undefined = 'https://powerbi-df.analysis-df.windows.net'
+  public defaultSite: string | undefined = 'DF'
+  public defaultWorkspace: string | undefined
+  public defaultProduct: string | undefined = 'powerbi'
 
   constructor(public readonly ctx: ExtensionContext) {
     super()
@@ -32,6 +35,13 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
     }
   }
 
+  public async goto(url: string) {
+    if (this.current === undefined)
+      this.create(url)
+    else
+      this.current.navigateTo(url)
+  }
+
   public async create(startUrl: string | Uri = this.config.startUrl) {
     this.refreshSettings()
 
@@ -43,7 +53,7 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
     panel.once('disposed', () => {
       if (this.current === panel) {
         this.current = undefined
-        commands.executeCommand('setContext', 'browse-lite-active', false)
+        commands.executeCommand('setContext', 'trident-poc-active', false)
       }
       this.panels.delete(panel)
       if (this.panels.size === 0) {
@@ -60,18 +70,17 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
 
     panel.on('focus', () => {
       this.current = panel
-      commands.executeCommand('setContext', 'browse-lite-active', true)
+      commands.executeCommand('setContext', 'trident-poc-active', true)
     })
 
     panel.on('blur', () => {
       if (this.current === panel) {
         this.current = undefined
-        commands.executeCommand('setContext', 'browse-lite-active', false)
+        commands.executeCommand('setContext', 'trident-poc-active', false)
       }
     })
 
     this.panels.add(panel)
-
     await panel.launch(startUrl.toString())
 
     this.emit('windowCreated', panel)
@@ -88,7 +97,7 @@ export class PanelManager extends EventEmitter.EventEmitter2 {
       return
 
     const panel = await this.create(`file://${filepath}`)
-    if (getConfig('browse-lite.localFileAutoReload')) {
+    if (getConfig('trident-poc.localFileAutoReload')) {
       panel.disposables.push(
         workspace.createFileSystemWatcher(filepath, true, false, false).onDidChange(() => {
         // TODO: check filename

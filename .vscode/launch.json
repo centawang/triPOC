@@ -18,7 +18,6 @@
       "stopOnEntry": false,
       "sourceMaps": true,
       "outFiles": [
-        "${workspaceRoot}/dist/extension.js"
       ],
       "preLaunchTask": "npm: build"
     }

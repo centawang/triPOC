@@ -7,7 +7,7 @@ export class DebugProvider {
 
   constructor(private manager: PanelManager) {    
     debug.onDidTerminateDebugSession((e: DebugSession) => {
-      if (e.name === 'Browse Lite: Launch' && e.configuration.urlFilter) {
+      if (e.name === 'Trident POC: Launch' && e.configuration.urlFilter) {
         // TODO: Improve this with some unique ID per browser window instead of url, to avoid closing multiple instances
         this.manager.disposeByUrl(e.configuration.urlFilter)
       }
@@ -37,14 +37,14 @@ export class DebugProvider {
       ): ProviderResult<DebugConfiguration[]> {
         return Promise.resolve([
           {
-            type: 'browse-lite',
-            name: 'Browse Lite: Attach',
+            type: 'trident-poc',
+            name: 'Trident POC: Attach',
             request: 'attach',
           },
           {
-            type: 'browse-lite',
+            type: 'trident-poc',
             request: 'launch',
-            name: 'Browse Lite: Launch',
+            name: 'Trident POC: Launch',
             url: 'http://localhost:3000',
           },
         ])
@@ -55,15 +55,15 @@ export class DebugProvider {
         token?: CancellationToken,
         // @ts-ignore
       ): ProviderResult<DebugConfiguration> {
-        if (!config || config.type !== 'browse-lite') {
+        if (!config || config.type !== 'trident-poc') {
           return null
         }
 
         config.type = debugType
         config._browseLite = true
 
-        if (config.request === 'launch') {          
-          config.name = 'Browse Lite: Launch'
+        if (config.request === 'launch') {
+          config.name = 'Trident POC: Launch'
           config.port = manager.config.debugPort
           config.request = 'attach'
           config.urlFilter = config.url
@@ -71,18 +71,18 @@ export class DebugProvider {
 
           if (config.port === null) {
             window.showErrorMessage(
-              'Could not launch Browse Lite window',
+              'Could not launch Trident POC window',
             )
           } else {
             return config
           }
         } else if (config.request === 'attach') {
-          config.name = 'Browse Lite: Attach'
+          config.name = 'Trident POC: Attach'
           config.port = manager.config.debugPort
 
           if (config.port === null) {
             window.showErrorMessage(
-              'No Browse Lite window was found. Open a Browse Lite window or use the "launch" request type.',
+              'No Trident POC window was found. Open a Trident POC window or use the "launch" request type.',
             );
           } else {
             return config
